@@ -1,62 +1,39 @@
-﻿<!--
-                Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+﻿
+<div id="sidebar" class="nav-collapse ">
+    <!-- sidebar menu start-->
+    <ul class="sidebar-menu" id="nav-accordion">
 
-                Tip 2: you can also add an image using data-image tag
-            -->
-<div class="logo">
-    <a href="http://www.creative-tim.com" class="simple-text">
-        Creative Tim
-    </a>
-</div>
-<div class="sidebar-wrapper">
-    <ul class="nav">
-        <li class="active">
-            <a href="dashboard.html">
-                <i class="material-icons">dashboard</i>
-                <p>Dashboard</p>
+        <p class="centered"><a href="profile.html"><img src="~/Admin/assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+        <h5 class="centered">Marcel Newman</h5>
+
+        <li class="mt">
+            <a asp-area="" asp-controller="Home" asp-action="Index">
+                <i class="fa fa-dashboard"></i>
+                <span>Dashboard</span>
             </a>
         </li>
-        <li>
-            <a href="user.html">
-                <i class="material-icons">person</i>
-                <p>User Profile</p>
+        <li class="sub-menu">
+            <a asp-area="" asp-controller="Dishs" asp-action="Index">
+                <i class="fa fa-book"></i>
+                <span>News</span>
             </a>
         </li>
-        <li>
-            <a href="table.html">
-                <i class="material-icons">content_paste</i>
-                <p>Table List</p>
+        <li class="sub-menu">
+            <a asp-area="" asp-controller="Galaries" asp-action="Index">
+                <i class="fa fa-picture-o"></i>
+                <span>Galary</span>
             </a>
         </li>
-        <li>
-            <a href="typography.html">
-                <i class="material-icons">library_books</i>
-                <p>Typography</p>
+        <li class="sub-menu">
+            <a href="javascript:;">
+                <i class="fa fa-cogs"></i>
+                <span>Settings</span>
             </a>
-        </li>
-        <li>
-            <a href="icons.html">
-                <i class="material-icons">bubble_chart</i>
-                <p>Icons</p>
-            </a>
-        </li>
-        <li>
-            <a href="maps.html">
-                <i class="material-icons">location_on</i>
-                <p>Maps</p>
-            </a>
-        </li>
-        <li>
-            <a href="notifications.html">
-                <i class="material-icons text-gray">notifications</i>
-                <p>Notifications</p>
-            </a>
-        </li>
-        <li class="active-pro">
-            <a href="upgrade.html">
-                <i class="material-icons">unarchive</i>
-                <p>Upgrade to PRO</p>
-            </a>
+            <ul class="sub">
+                <li><a asp-area="" asp-controller="Roles" asp-action="Index">Roles</a></li>
+                <li><a asp-area="" asp-controller="AppUser" asp-action="Index">Users</a></li>
+            </ul>
         </li>
     </ul>
+    <!-- sidebar menu end-->
 </div>
