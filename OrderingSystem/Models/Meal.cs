@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Models
 {
-    public class Dish
+    public class Meal
     {
         #region Model Data
 
@@ -19,15 +19,11 @@ namespace OrderingSystem.Models
         [Required(ErrorMessage = "Image is required")]
         public string Image { get; set; }
 
-        [Required(ErrorMessage = "Amount is required")]
-        public double Amount { get; set; }
-
         #endregion
 
-        #region Forigen Keys
+        #region ICollection
 
-        public int MealId { get; set; }
-        public virtual Meal Meal { get; set; }
+        public virtual ICollection<Dish> Dishes { get; set; }
 
         #endregion
     }
