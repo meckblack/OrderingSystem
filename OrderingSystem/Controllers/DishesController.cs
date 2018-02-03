@@ -67,9 +67,9 @@ namespace OrderingSystem.Controllers
         // GET: Dishes/Create
         public IActionResult Create()
         {
-            ViewData["MealId"] = new SelectList(_db.Meals, "Id", "Image");
-            var dishes = new Dish();
-            return PartialView("Create", dishes);
+            ViewData["MealId"] = new SelectList(_db.Meals, "Id", "Name");
+            
+            return PartialView();
         }
 
         // POST: Dishes/Create
@@ -102,12 +102,12 @@ namespace OrderingSystem.Controllers
                     dish.Image = filename;
                     _db.Dishes.Add(dish);
                     await _db.SaveChangesAsync();
-                    TempData["success"] = "Dish added!";
-                    return Json(new { success = true });
+                    TempData["success"] = "Dish has been added!";
+                    return RedirectToAction(nameof(Index));
                 }
             }
 
-            ViewData["MealId"] = new SelectList(_db.Meals, "Id", "Image", dish.MealId);
+            ViewData["MealId"] = new SelectList(_db.Meals, "Id", "Name", dish.MealId);
             return View(dish);
         }
 
@@ -128,7 +128,7 @@ namespace OrderingSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["MealId"] = new SelectList(_db.Meals, "Id", "Image", dish.MealId);
+            ViewData["MealId"] = new SelectList(_db.Meals, "Id", "Name", dish.MealId);
             return View(dish);
         }
 
@@ -137,34 +137,55 @@ namespace OrderingSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Image,Amount,MealId")] Dish dish)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Image,Amount,MealId")] Dish dish, IFormFile file)
         {
-            if (id != dish.Id)
+            if (file == null || file.Length == 0)
             {
-                return NotFound();
+                ModelState.AddModelError("null_img", "File not selected");
             }
+            else
+            {
+                var fileinfo = new FileInfo(file.FileName);
+                var filename = DateTime.Now.ToFileTime() + fileinfo.Extension;
+                var uploads = Path.Combine(_environment.WebRootPath, "uploads");
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (file.Length > 0)
                 {
-                    _db.Update(dish);
-                    await _db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DishExists(dish.Id))
+                    using (var fileStream = new FileStream(Path.Combine(uploads, filename), FileMode.Create))
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
+                        await file.CopyToAsync(fileStream);
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                if (id != dish.Id)
+                {
+                    return NotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _db.Update(dish);
+                        await _db.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!DishExists(dish.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+
+            
             }
-            ViewData["MealId"] = new SelectList(_db.Meals, "Id", "Image", dish.MealId);
+            ViewData["MealId"] = new SelectList(_db.Meals, "Id", "Name", dish.MealId);
             return View(dish);
         }
 

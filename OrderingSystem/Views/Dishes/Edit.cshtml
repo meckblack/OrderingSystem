@@ -2,53 +2,59 @@
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 class="modal-title"> <strong> ADD A DISH </strong> </h3>
-</div>
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+            <div style="padding: 20px;">
+                <h2><strong>EDIT DISH</strong></h2>
+                <section id="unseen">
+                    <form asp-action="Edit" enctype="multipart/form-data">
+                        <div class="container-fluid">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Name" class="col-md-2 control-label"></label>
+                                <div class="col-md-10" style="padding-bottom: 7px">
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Amount" class="col-md-2 control-label"></label>
+                                <div class="col-md-10" style="padding-bottom: 7px">
+                                    <input asp-for="Amount" class="form-control" />
+                                    <span asp-validation-for="Amount" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Meal Name</label>
+                                <div class="col-md-10" style="padding-bottom: 7px">
+                                    <select asp-for="MealId" class="form-control" asp-items="ViewBag.MealId"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Image" class="col-md-2 control-label"></label>
+                                <div class="col-md-10" style="padding-bottom: 7px">
+                                    <input class="form-control" type="file" name="file" />
+                                    <span asp-validation-for="Image" class="text-danger"></span>
+                                </div>
+                            </div>
 
-<form asp-action="Edit">
-    <div class="modal-body">
-        <div class="container-fluid">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="col-md-2 control-label"></label>
-                <div class="col-md-10" style="padding-bottom: 7px">
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Amount" class="col-md-2 control-label"></label>
-                <div class="col-md-10" style="padding-bottom: 7px">
-                    <input asp-for="Amount" class="form-control" />
-                    <span asp-validation-for="Amount" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="MealId" class="col-md-2 control-label"></label>
-                <div class="col-md-10" style="padding-bottom: 7px">
-                    <select asp-for="MealId" class="form-control" asp-items="ViewBag.MealId"></select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Image" class="col-md-2 control-label"></label>
-                <div class="col-md-10" style="padding-bottom: 7px">
-                    <input class="form-control" type="file" name="file" />
-                    <span asp-validation-for="Image" class="text-danger"></span>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal-footer">
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                    <button class="btn btn-warning" data-dismiss="modal">Cancel</button>
-                </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="hidden" value="blank" asp-for="Image" />
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="submit" class="btn btn-success" value="Submit" />
+                                    <button class="btn btn-warning">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
             </div>
         </div>
     </div>
-</form>
+</div>
+

@@ -9,7 +9,7 @@
     <div class="col-md-12">
         <div class="content-panel">
             <div style="padding-right: 15px">
-                <a asp-area="" asp-controller="Dishes" asp-action="Create" class="btn btn-primary btn pull-right" data-modal=""><i style="color: red;" class="fa fa-plus"></i> ADD</a>
+                <a asp-area="" asp-controller="Dishes" asp-action="Create" class="btn btn-primary btn pull-right"><i style="color: red;" class="fa fa-plus"></i> ADD</a>
             </div>
             <div style="padding: 20px;">
                 <h2><strong> DISHES </strong></h2>
@@ -24,13 +24,10 @@
                                     @Html.DisplayNameFor(model => model.Name)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Image)
-                                </th>
-                                <th>
                                     @Html.DisplayNameFor(model => model.Amount)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Meal)
+                                    Meal Name
                                 </th>
                                 <th>
                                     Actions
@@ -48,34 +45,21 @@
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Image)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.Amount)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Meal.Image)
+                                    @Html.DisplayFor(modelItem => item.Meal.Name)
                                 </td>
                                 <td>
-                                    <a class="btn btn-warning btn-sm" asp-action="Edit" data-modal="" asp-route-id="@item.Id"><i class="fa fa-pencil-square-o "></i></a>
-                                    <a class="btn btn-primary btn-sm" asp-action="Details" data-modal="" asp-route-id="@item.Id"><i class="fa fa-book "></i></a>
-                                    <a class="btn btn-danger btn-sm" asp-action="Delete" data-modal="" asp-route-id="@item.Id"><i class="fa fa-trash-o "></i></a>
+                                    <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-square-o "></i></a>
+                                    <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-book "></i></a>
+                                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-trash-o "></i></a>
                                 </td>
                             </tr>
                             }
                         </tbody>
                     </table>
                 </section>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- modal placeholder-->
-<div id='myModal' class='modal fade in' data-backdrop="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div id='myModalContent'>
             </div>
         </div>
     </div>
