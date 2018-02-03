@@ -103,7 +103,7 @@ namespace OrderingSystem.Controllers
                     _context.Add(dish);
                     await _context.SaveChangesAsync();
                     TempData["success"] = "Dish added!";
-                    return RedirectToAction(nameof(Index));
+                    return Json(new { success = true });
                 }
             }
 
