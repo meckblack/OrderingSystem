@@ -37,21 +37,21 @@
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @(x++)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-square-o "></i></a>
-                                    <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-book "></i></a>
-                                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-trash-o "></i></a>
-                                </td>
-                            </tr>
-                    }
+                            {
+                                <tr>
+                                    <td>
+                                        @(x++)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-square-o "></i></a>
+                                        <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-book "></i></a>
+                                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-trash-o "></i></a>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </section>
@@ -61,5 +61,16 @@
 </div>
 
 
-
+<script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                columnDefs: [
+                    {
+                        targets: [0, 1, 2],
+                        className: 'dataTable'
+                    }
+                ]
+            });
+        });
+</script>
 

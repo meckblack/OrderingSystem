@@ -4,27 +4,35 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+            <div style="padding: 20px;">
+                <h2><strong>DETAILS </strong></h2>
+                <section id="unseen">
+                    <dl class="dl-horizontal">
+                        <dd>
+                            <img style="max-width:60%; max-height:60%; text-align:center; display: block; margin-left: auto; margin-right: auto; width: 50%;" src="~/uploads/@Html.DisplayFor(model => model.Image)" />
+                        </dd>
+                        <dt>
+                            <strong>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </strong>
+                        </dt>
+                        <dd>
+                            <strong>
+                                @Html.DisplayFor(model => model.Name)
+                            </strong>
+                        </dd>
+                    </dl>
+                    <div>
+                        <a class="btn btn-warning" asp-action="Index">Cancel</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div>
-    <h4>Meal</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+

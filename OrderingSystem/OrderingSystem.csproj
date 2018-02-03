@@ -5,6 +5,10 @@
     <UserSecretsId>aspnet-OrderingSystem-CAB60424-7441-4634-9512-1F5B6D0890F5</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Views\Meals\Details.cshtml~RF19c97bac.TMP" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
@@ -19,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\Landing\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 

@@ -208,6 +208,7 @@ namespace OrderingSystem.Controllers
             var meal = await _db.Meals.SingleOrDefaultAsync(m => m.Id == id);
             _db.Meals.Remove(meal);
             await _db.SaveChangesAsync();
+            TempData["success"] = "Meal has been removed!";
             return RedirectToAction(nameof(Index));
         }
 
