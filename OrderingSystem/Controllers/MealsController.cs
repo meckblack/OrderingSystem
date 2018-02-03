@@ -18,17 +18,27 @@ namespace OrderingSystem.Controllers
         private readonly ApplicationDbContext _db;
         private readonly IHostingEnvironment _environment;
 
+        #region Controller
+
         public MealsController(ApplicationDbContext context, IHostingEnvironment environment)
         {
             _db = context;
             _environment = environment;
         }
 
+        #endregion
+
+        #region Meal Index
+
         // GET: Meals
         public async Task<IActionResult> Index()
         {
             return View(await _db.Meals.ToListAsync());
         }
+
+        #endregion
+
+        #region Meal Details
 
         // GET: Meals/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -47,6 +57,10 @@ namespace OrderingSystem.Controllers
 
             return View(meal);
         }
+
+        #endregion
+
+        #region Meal Create
 
         // GET: Meals/Create
         public ActionResult Create()
@@ -88,6 +102,10 @@ namespace OrderingSystem.Controllers
             }
             return View();
         }
+
+        #endregion
+
+        #region Meal Edit
 
         // GET: Meals/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -140,6 +158,11 @@ namespace OrderingSystem.Controllers
             return View(meal);
         }
 
+
+        #endregion
+
+        #region Meal Delete
+
         // GET: Meals/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -169,9 +192,18 @@ namespace OrderingSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        #endregion
+
+        #region MealExits
+
         private bool MealExists(int id)
         {
             return _db.Meals.Any(e => e.Id == id);
         }
+
+        #endregion
+
+
+
     }
 }
