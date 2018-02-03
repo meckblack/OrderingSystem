@@ -1,0 +1,88 @@
+﻿@model IEnumerable<OrderingSystem.Models.Meal>
+
+@{
+    ViewData["Title"] = "Index";
+    var x = 1;
+}
+
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+            <div style="padding-right: 15px">
+                <a asp-area="" asp-controller="Meals" asp-action="Create" class="btn btn-primary btn pull-right" data-modal=""><i style="color: red;" class="fa fa-plus"></i> ADD</a>
+            </div>
+            <div style="padding: 20px;">
+                <h2><strong> MEALS </strong></h2>
+                <section id="unseen">
+                    <table class="table table-hover" id="myTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    S/N
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Image)
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @(x++)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Image)
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-warning btn-sm" asp-action="Edit" data-modal="" asp-route-id="@item.Id"><i class="fa fa-pencil-square-o "></i></a>
+                                        <a class="btn btn-primary btn-sm" asp-action="Details" data-modal="" asp-route-id="@item.Id"><i class="fa fa-book "></i></a>
+                                        <a class="btn btn-danger btn-sm" asp-action="Delete" data-modal="" asp-route-id="@item.Id"><i class="fa fa-trash-o "></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in' data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/Modal/MEP.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            columnDefs: [
+                {
+                    targets: [0, 1, 2],
+                    className: 'dataTable'
+                }
+            ]
+        });
+    });
+</script>
+

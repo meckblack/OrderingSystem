@@ -13,35 +13,24 @@ using OrderingSystem.Models;
 
 namespace OrderingSystem.Controllers
 {
-    public class DishesController : Controller
+    public class MealsController : Controller
     {
         private readonly ApplicationDbContext _db;
         private readonly IHostingEnvironment _environment;
 
-        #region Controller
-
-        public DishesController(ApplicationDbContext context, IHostingEnvironment environment)
+        public MealsController(ApplicationDbContext context, IHostingEnvironment environment)
         {
             _db = context;
             _environment = environment;
         }
 
-        #endregion
-
-        #region Dish Index
-
-        // GET: Dishes
+        // GET: Meals
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _db.Dishes.Include(d => d.Meal);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _db.Meals.ToListAsync());
         }
 
-        #endregion
-
-        #region Dish Details
-
-        // GET: Dishes/Details/5
+        // GET: Meals/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,35 +38,27 @@ namespace OrderingSystem.Controllers
                 return NotFound();
             }
 
-            var dish = await _db.Dishes
-                .Include(d => d.Meal)
+            var meal = await _db.Meals
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (dish == null)
+            if (meal == null)
             {
                 return NotFound();
             }
 
-            return View(dish);
+            return View(meal);
         }
 
-        #endregion
-
-        #region Dish Create
-
-        // GET: Dishes/Create
-        public IActionResult Create()
+        // GET: Meals/Create
+        public ActionResult Create()
         {
-            ViewData["MealId"] = new SelectList(_db.Meals, "Id", "Image");
-            var dishes = new Dish();
-            return PartialView("Create", dishes);
+            var meal = new Meal();
+            return PartialView("Create", meal);
         }
 
-        // POST: Dishes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Meal/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Image,Amount,MealId")] Dish dish, IFormFile file)
+        public async Task<ActionResult> Create(Meal meal, IFormFile file)
         {
             if (file == null || file.Length == 0)
             {
@@ -88,7 +69,6 @@ namespace OrderingSystem.Controllers
                 var fileinfo = new FileInfo(file.FileName);
                 var filename = DateTime.Now.ToFileTime() + fileinfo.Extension;
                 var uploads = Path.Combine(_environment.WebRootPath, "uploads");
-
                 if (file.Length > 0)
                 {
                     using (var fileStream = new FileStream(Path.Combine(uploads, filename), FileMode.Create))
@@ -99,23 +79,17 @@ namespace OrderingSystem.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    dish.Image = filename;
-                    _db.Dishes.Add(dish);
+                    meal.Image = filename;
+                    _db.Meals.Add(meal);
                     await _db.SaveChangesAsync();
-                    TempData["success"] = "Dish added!";
+                    TempData["success"] = "Meal added!";
                     return Json(new { success = true });
                 }
             }
-
-            ViewData["MealId"] = new SelectList(_db.Meals, "Id", "Image", dish.MealId);
-            return View(dish);
+            return View();
         }
 
-        #endregion
-
-        #region Dish Edit
-
-        // GET: Dishes/Edit/5
+        // GET: Meals/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -123,23 +97,22 @@ namespace OrderingSystem.Controllers
                 return NotFound();
             }
 
-            var dish = await _db.Dishes.SingleOrDefaultAsync(m => m.Id == id);
-            if (dish == null)
+            var meal = await _db.Meals.SingleOrDefaultAsync(m => m.Id == id);
+            if (meal == null)
             {
                 return NotFound();
             }
-            ViewData["MealId"] = new SelectList(_db.Meals, "Id", "Image", dish.MealId);
-            return View(dish);
+            return View(meal);
         }
 
-        // POST: Dishes/Edit/5
+        // POST: Meals/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Image,Amount,MealId")] Dish dish)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Image")] Meal meal)
         {
-            if (id != dish.Id)
+            if (id != meal.Id)
             {
                 return NotFound();
             }
@@ -148,12 +121,12 @@ namespace OrderingSystem.Controllers
             {
                 try
                 {
-                    _db.Update(dish);
+                    _db.Update(meal);
                     await _db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DishExists(dish.Id))
+                    if (!MealExists(meal.Id))
                     {
                         return NotFound();
                     }
@@ -164,15 +137,10 @@ namespace OrderingSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MealId"] = new SelectList(_db.Meals, "Id", "Image", dish.MealId);
-            return View(dish);
+            return View(meal);
         }
 
-        #endregion
-
-        #region Dish Delete
-
-        // GET: Dishes/Delete/5
+        // GET: Meals/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -180,41 +148,30 @@ namespace OrderingSystem.Controllers
                 return NotFound();
             }
 
-            var dish = await _db.Dishes
-                .Include(d => d.Meal)
+            var meal = await _db.Meals
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (dish == null)
+            if (meal == null)
             {
                 return NotFound();
             }
 
-            return View(dish);
+            return View(meal);
         }
 
-        // POST: Dishes/Delete/5
+        // POST: Meals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var dish = await _db.Dishes.SingleOrDefaultAsync(m => m.Id == id);
-            _db.Dishes.Remove(dish);
+            var meal = await _db.Meals.SingleOrDefaultAsync(m => m.Id == id);
+            _db.Meals.Remove(meal);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        #endregion
-
-        #region Dish Dispose
-
-        private bool DishExists(int id)
+        private bool MealExists(int id)
         {
-            return _db.Dishes.Any(e => e.Id == id);
+            return _db.Meals.Any(e => e.Id == id);
         }
-
-        #endregion
-
-
-
-
     }
 }

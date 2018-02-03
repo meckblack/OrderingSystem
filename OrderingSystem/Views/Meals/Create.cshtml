@@ -1,0 +1,42 @@
+﻿@model OrderingSystem.Models.Meal
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title"> <strong> ADD A MEALS </strong> </h3>
+</div>
+
+<form asp-action="Create">
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="col-md-2 control-label"></label>
+                <div class="col-md-10" style="padding-bottom: 7px">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="col-md-2 control-label"></label>
+                <div class="col-md-10" style="padding-bottom: 7px">
+                    <input class="form-control" type="file" name="file" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <button class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
