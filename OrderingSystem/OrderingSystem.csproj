@@ -23,24 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\Landing\" />
     <Folder Include="wwwroot\uploads\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\Landing\images\arrows.psd" />
-    <None Include="wwwroot\Landing\images\close.psd" />
-    <None Include="wwwroot\Landing\images\img-sprite.psd" />
-    <None Include="wwwroot\Landing\images\logo.psd" />
-    <None Include="wwwroot\Landing\js\classie.js" />
-    <None Include="wwwroot\Landing\js\fwslider.js" />
-    <None Include="wwwroot\Landing\js\jquery-ui.min.js" />
-    <None Include="wwwroot\Landing\js\jquery.etalage.min.js" />
-    <None Include="wwwroot\Landing\js\jquery.fancybox.js" />
-    <None Include="wwwroot\Landing\js\jquery.flexisel.js" />
-    <None Include="wwwroot\Landing\js\jquery.magnific-popup.js" />
-    <None Include="wwwroot\Landing\js\jquery.min.js" />
-    <None Include="wwwroot\Landing\js\responsive-nav.js" />
-    <None Include="wwwroot\Landing\js\uisearch.js" />
   </ItemGroup>
 
 </Project>
