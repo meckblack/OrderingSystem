@@ -64,9 +64,8 @@ namespace OrderingSystem.Controllers
 
         // GET: Meals/Create
         public ActionResult Create()
-        {
-            var meal = new Meal();
-            return PartialView("Create", meal);
+        { 
+            return View();
         }
 
         // POST: Meal/Create
@@ -97,7 +96,7 @@ namespace OrderingSystem.Controllers
                     _db.Meals.Add(meal);
                     await _db.SaveChangesAsync();
                     TempData["success"] = "Meal added!";
-                    return Json(new { success = true });
+                    return RedirectToAction(nameof(Index));
                 }
             }
             return View();

@@ -18,6 +18,9 @@
                         <thead>
                             <tr>
                                 <th>
+                                    S/N
+                                </th>
+                                <th>
                                     @Html.DisplayNameFor(model => model.Name)
                                 </th>
                                 <th>
@@ -80,20 +83,6 @@
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/Modal/MEP.js"></script>
-
-
-<script>
-    $(document).ready(function () {
-        $('#myTable').DataTable({
-            columnDefs: [
-                {
-                    targets: [0, 1, 2],
-                    className: 'dataTable'
-                }
-            ]
-        });
-    });
-</script>
 
 
 

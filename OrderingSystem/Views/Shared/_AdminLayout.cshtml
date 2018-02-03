@@ -107,7 +107,18 @@
         </section><!-- /MAIN CONTENT -->
     </section>
 
-
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                columnDefs: [
+                    {
+                        targets: [0, 1, 2],
+                        className: 'dataTable'
+                    }
+                ]
+            });
+        });
+    </script>
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>

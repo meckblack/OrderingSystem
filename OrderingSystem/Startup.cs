@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OrderingSystem.Data;
 using OrderingSystem.Models;
 using OrderingSystem.Services;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace OrderingSystem
 {
@@ -37,6 +38,7 @@ namespace OrderingSystem
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
