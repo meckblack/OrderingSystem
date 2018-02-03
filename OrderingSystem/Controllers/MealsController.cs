@@ -95,7 +95,7 @@ namespace OrderingSystem.Controllers
                     meal.Image = filename;
                     _db.Meals.Add(meal);
                     await _db.SaveChangesAsync();
-                    TempData["success"] = "Meal added!";
+                    TempData["success"] = "Meal has been added!";
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -127,35 +127,55 @@ namespace OrderingSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Image")] Meal meal)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Image")] Meal meal, IFormFile file)
         {
             if (id != meal.Id)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            if (file == null || file.Length == 0)
             {
-                try
+                ModelState.AddModelError("null_img", "File not selected");
+            }
+            else
+            {
+                var fileinfo = new FileInfo(file.FileName);
+                var filename = DateTime.Now.ToFileTime() + fileinfo.Extension;
+                var uploads = Path.Combine(_environment.WebRootPath, "uploads");
+                if (file.Length > 0)
                 {
-                    _db.Update(meal);
-                    await _db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MealExists(meal.Id))
+                    using (var fileStream = new FileStream(Path.Combine(uploads, filename), FileMode.Create))
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
+                        await file.CopyToAsync(fileStream);
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        meal.Image = filename;
+                        _db.Update(meal);
+                        await _db.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!MealExists(meal.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    TempData["success"] = "Meal has been modified!";
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(meal);
         }
+
+
 
 
         #endregion
