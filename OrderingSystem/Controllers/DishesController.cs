@@ -168,6 +168,7 @@ namespace OrderingSystem.Controllers
                     {
                         _db.Update(dish);
                         await _db.SaveChangesAsync();
+                        TempData["success"] = "Meal has been modified!";
                     }
                     catch (DbUpdateConcurrencyException)
                     {
@@ -220,6 +221,7 @@ namespace OrderingSystem.Controllers
             var dish = await _db.Dishes.SingleOrDefaultAsync(m => m.Id == id);
             _db.Dishes.Remove(dish);
             await _db.SaveChangesAsync();
+            TempData["success"] = "Dish has been removed!";
             return RedirectToAction(nameof(Index));
         }
 
