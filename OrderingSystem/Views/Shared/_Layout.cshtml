@@ -3,11 +3,51 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title>Odarms</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/bootstrap4/bootstrap.min.css">
+    <link href="~/Content/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/Content/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/responsive.css">
+    <link rel="stylesheet" href="~/Content/plugins/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/contact_styles.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/contact_responsive.css">
 </head>
 <body>
-    <div>
+
+    <div class="super_container">
+        <header class="header trans_300">
+
+            <!-- Top Navigation Begin -->
+            @Html.Partial("~/Views/Shared/Layout Partial/_LandingLayoutTopNavigation.cshtml")
+            <!-- Top Navigation End-->
+            <!-- Main Navigation Begin -->
+            @Html.Partial("~/Views/Shared/Layout Partial/_LandingLayoutMainNavigation.cshtml")
+            <!-- Main Navigation End -->
+
+        </header>
+        <div class="fs_menu_overlay"></div>
+        <!-- Render Body Begin -->
         @RenderBody()
+        <!-- Render Body End -->
+        <!-- Footer Begin -->
+        @Html.Partial("~/Views/Shared/Layout Partial/_LandingLayoutFooter.cshtml")
+        <!-- Footer End -->
+
+
     </div>
+
+    <script src="~/Landing/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/styles/bootstrap4/popper.js"></script>
+    <script src="~/Content/styles/bootstrap4/bootstrap.min.js"></script>
+    <script src="~/Content/plugins/Isotope/isotope.pkgd.min.js"></script>
+    <script src="~/Content/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="~/Content/plugins/easing/easing.js"></script>
+    <script src="~/Content/js/custom.js"></script>
+    <script src="~/Content/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <script src="~/Content/js/contact_custom.js"></script>
 </body>
 </html>

@@ -23,8 +23,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Landing\" />
     <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Landing\js\categories_custom.js" />
+    <None Include="wwwroot\Landing\js\contact_custom.js" />
+    <None Include="wwwroot\Landing\js\custom.js" />
+    <None Include="wwwroot\Landing\js\jquery-3.2.1.min.js" />
+    <None Include="wwwroot\Landing\js\single_custom.js" />
+    <None Include="wwwroot\Landing\styles\bootstrap4\bootstrap.min.js" />
+    <None Include="wwwroot\Landing\styles\bootstrap4\popper.js" />
   </ItemGroup>
 
 </Project>
