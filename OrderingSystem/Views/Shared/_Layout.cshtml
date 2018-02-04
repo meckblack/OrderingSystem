@@ -1,88 +1,66 @@
-﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Odarms</title>
+    <title>CMP411 || @ViewData["title"]</title>
 
-    <environment exclude="Development">
-        <link href="~/Landing/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="~/Landing/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-        <link rel="stylesheet" type="text/css" href="~/Landing/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-        <link rel="stylesheet" type="text/css" href="~/Landing/plugins/OwlCarousel2-2.2.1/animate.css">
-        <link rel="stylesheet" type="text/css" href="~/Landing/styles/main_styles.css">
-        <link rel="stylesheet" type="text/css" href="~/Landing/styles/responsive.css">
-        <link rel="stylesheet" href="~/Landing/plugins/themify-icons/themify-icons.css">
-        <link rel="stylesheet" type="text/css" href="~/Landing/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-        <link rel="stylesheet" type="text/css" href="~/Landing/styles/contact_styles.css">
-        <link rel="stylesheet" type="text/css" href="~/Landing/styles/contact_responsive.css">
-    </environment>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="Description" content="" />
+    <meta name="Keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
-
-
-    @Html.Raw(JavaScriptSnippet.FullScript)
-
+    <link rel="stylesheet" type="text/css" href="~/Landing/styles/bootstrap4/bootstrap.min.css">
+    <link href="~/Landing/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/Landing/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/Landing/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="~/Landing/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/Landing/styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="~/Landing/styles/responsive.css">
 
 </head>
 <body>
-
     <div class="super_container">
+        <!--========================================================
+                          HEADER
+        =========================================================-->
+
         <header class="header trans_300">
 
-            <!-- Top Navigation Begin -->
-            @Html.Partial("~/Views/Shared/_LayoutTopNavigation.cshtml")
-            <!-- Top Navigation End-->
-            <!-- Main Navigation Begin -->
-            @Html.Partial("~/Views/Shared/_LayoutMainNavigation.cshtml")
-            <!-- Main Navigation End -->
+            @Html.Partial("~/Views/Shared/_LayoutHeader.cshtml")
 
         </header>
-        <div class="fs_menu_overlay"></div>
-        <!-- Render Body Begin -->
-        @RenderBody()
-        <!-- Render Body End -->
-        <!-- Footer Begin -->
-        @Html.Partial("~/Views/Shared/_LayoutFooter.cshtml")
-        <!-- Footer End -->
 
+        <!--========================================================
+                              CONTENT
+        =========================================================-->
+
+        
+
+            @RenderBody()
+
+        
+        <!--========================================================
+                              FOOTER
+        =========================================================-->
+
+        <footer class="footer">
+
+            @Html.Partial("~/Views/Shared/_LayoutFooter.cshtml")
+
+        </footer>
 
     </div>
 
 
-    <environment names="Development">
-        <script src="~/Landing/styles/bootstrap4/popper.js"></script>
-        <script src="~/Landing/plugins/Isotope/isotope.pkgd.min.js"></script>
-        <script src="~/Landing/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-        <script src="~/Landing/plugins/easing/easing.js"></script>
-        <script src="~/Landing/js/custom.js"></script>
-        <script src="~/Landing/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-        <script src="~/Landing/js/contact_custom.js"></script>
-    </environment>
 
-    <environment exclude="Development">
 
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
 
-    @RenderSection("Scripts", required: false)
+    <script src="~/Landing/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Landing/styles/bootstrap4/popper.js"></script>
+    <script src="~/Landing/styles/bootstrap4/bootstrap.min.js"></script>
+    <script src="~/Landing/plugins/Isotope/isotope.pkgd.min.js"></script>
+    <script src="~/Landing/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="~/Landing/plugins/easing/easing.js"></script>
+    <script src="~/Landing/js/custom.js"></script>
 
 </body>
 </html>
