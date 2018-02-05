@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -119,7 +121,7 @@ namespace OrderingSystem.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> DeleteRole(int? id)
         {
             if (id == null)
             {
@@ -136,10 +138,10 @@ namespace OrderingSystem.Controllers
             return View(role);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteRole(int id)
         {
             var role = await _db.Roles.SingleOrDefaultAsync(m => m.Id == id);
             _db.Roles.Remove(role);
@@ -148,8 +150,123 @@ namespace OrderingSystem.Controllers
             return RedirectToAction(nameof(RoleIndex));
         }
 
+        [HttpGet]
+        [Authorize]
+        public ActionResult UserIndex()
+        {
+            var user = _db.Users.ToList();
+            return View("UserIndex", user);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Register()
+        {
+            ViewBag.Role = new SelectList(_db.Roles, "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var role = await _db.Roles.FindAsync(model.RoleId);
+                var super = _db.Users.Where(s => s.Role.Name == "Superuser").ToArray();
+
+                if (_db.Users.Any(s => s.Email == model.Email))
+                {
+                    ModelState.AddModelError("", "This Eail is already in use!!!");
+                }
+                if (role.Name == "Superuser" && super.Length == 1)
+                {
+                    ModelState.AddModelError("", "There can only be one superuser");
+                }
+                else
+                {
+                    var user = new ApplicationUser()
+                    {
+                        UserName = model.Email,
+                        Email = model.Email,
+                        RoleId = model.RoleId
+                    };
+                    var result = await _userManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        var message = new MailMessage();
+                        message.Priority = MailPriority.High;
+                        message.From = new MailAddress("no-reply@blvck.dev", "kytech");
+
+                        message.To.Add(new MailAddress(model.Email));
+
+                        var url = Url.Action("Login", "Account", new { }, protocol: Request.Scheme);
+
+                        var emailBody =
+                            "<div>" +
+                        "<h3 style='font-size: 30px; text-align:center;'><strong>CMP441 RESTUARANT</strong></h3>" +
+                        "<div style='position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; padding-top: 5px;'>" +
+                            "<h4 style='font-size: 18px; text-align:justify;'>You have been added to the Association Information Management System. </h4>" +
+                            "<p style='font-size: 18px; text-align:justify;'>Your username is " + model.Email + " and your password is " + model.Password +
+                            ". Please login and change your password by clicking <a href=\"" + url + "\">here</a></p>" +
+                        "<footer style='font-size: 18px; text-align:center;'>" +
+                            "<p>&copy;" + DateTime.Now.Year + " blvck.</p></footer></div>";
+
+                        message.Body = string.Format(emailBody);
+                        message.IsBodyHtml = true;
+
+                        using (var stmp = new SmtpClient())
+                        {
+                            await stmp.SendMailAsync(message);
+                        }
+
+                        TempData["Success"] = "User account successfully created! ";
+                        return RedirectToAction(nameof(RoleIndex));
+                    }
+                    else
+                    {
+                        AddErrors(result);
+                    }
+                }
+            }
+            // If we got this far, something failed, redisplay form
+            ViewBag.Role = new SelectList(_db.Roles, "Id", "Name", model.RoleId);
+            return View(model);
+        }
 
 
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> RemoveUser(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var role = await _db.Roles
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            return View(role);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> RemoveUser(int id)
+        {
+          
+            var user = await _db.Users.SingleOrDefaultAsync(m => m.Id == id.ToString());
+            _db.Users.Remove(user);
+            await _db.SaveChangesAsync();
+            TempData["success"] = "Application user has been removed!";
+            return RedirectToAction(nameof(UserIndex));
+        }
         #endregion
 
         [HttpGet]

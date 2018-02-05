@@ -8,6 +8,13 @@
 
 <div class="row mt">
     <div class="col-md-12">
+        @if (TempData["success"] != null)
+    {
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            @TempData["success"]
+        </div>
+}
         <div class="content-panel">
             <div style="padding-right: 15px">
                 <a asp-area="" asp-controller="Dishes" asp-action="Create" class="btn btn-primary btn pull-right"><i style="color: red;" class="fa fa-plus"></i> ADD</a>
@@ -37,7 +44,7 @@
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
-                            {
+                        {
                             <tr>
                                 <td>
                                     @(x++)
@@ -57,7 +64,7 @@
                                     <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-trash-o "></i></a>
                                 </td>
                             </tr>
-                            }
+                    }
                         </tbody>
                     </table>
                 </section>
@@ -65,9 +72,6 @@
         </div>
     </div>
 </div>
-
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/Modal/MEP.js"></script>
 
 
 

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<OrderingSystem.Models.Role>
+
+@{
+    ViewData["Title"] = "Role Index";
+    var x = 1;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+            <div style="padding-right: 15px">
+                <a asp-area="" asp-controller="Account" asp-action="CreateRole" class="btn btn-primary btn pull-right"><i style="color: red;" class="fa fa-plus"></i> ADD</a>
+            </div>
+            <div style="padding: 20px;">
+                <h2><strong> DISHES </strong></h2>
+                <section id="unseen">
+                    <table class="table table-hover" id="myTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    S/N
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @(x++)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary btn-sm" asp-controller="Account" asp-action="Permissions" asp-route-id="@item.Id"><i class="fa fa-book "></i></a>
+                                        <a class="btn btn-warning btn-sm" asp-controller="Account" asp-action="EditRole" asp-route-id="@item.Id"><i class="fa fa-pencil-square-o "></i></a>
+                                        <a class="btn btn-danger btn-sm" asp-controller="Account" asp-action="DeleteRole" asp-route-id="@item.Id"><i class="fa fa-trash-o "></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
