@@ -21,6 +21,12 @@ namespace OrderingSystem.Controllers
             return View();
         }
 
+        [Route("shop/single")]
+        public IActionResult Single()
+        {
+            return View();
+        }
+
         public JsonResult FetchMeals()
         {
             var meal = app.Meals.OrderBy(s => s.Name).ToList();
