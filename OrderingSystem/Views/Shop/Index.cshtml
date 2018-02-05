@@ -26,7 +26,22 @@
         </div>
         <div class="row">
             <div class="col">
-                <div class="product-grid" id="products" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'></div>
+                <div class="product-grid" id="products" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
+                    <div class="product-item men">
+                        <div class="product discount product_filter">
+                            <div class="product_image">
+                                <img src="images/product_1.png" alt="">
+                            </div>
+                            <div class="favorite favorite_left"></div>
+                            <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>
+                            <div class="product_info">
+                                <h6 class="product_name"><a href="single.html">Fujifilm X100T 16 MP Digital Camera (Silver)</a></h6>
+                                <div class="product_price">$520.00<span>$590.00</span></div>
+                            </div>
+                        </div>
+                        <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -58,10 +73,29 @@
             async: true,
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {
+                    //var product = 
+                    //    '<div class="product-item men">' +
+                    //        '<div class="product discount product_filter">' +
+                    //            '<div class="product_image">' +
+                    //                '<img src="/uploads/' + data[i].image + '" alt="">'
+                    //         '</div>' +
+                    //                '<div class="favorite favorite_left"></div>' +
+                    //                '<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>' +
+                    //                '<div class="product_info">' +
+                    //                    '<h6 class="product_name"><a href="">' + data[i].name + '</a></h6>' +
+                    //                    '<div class="product_price"> N' + data[i].amount + '<span>$590.00</span></div>' +
+                    //                '</div>' +
+                    //            '</div>' +
+                    //            '<a href="#" class = "red_button add_to_cart_button" >add to cart</a>' +
+                    //        '</div>'
+                    //         $('#products').append(product);
+
                     var product = '<div class="product-item men"><div class="product discount product_filter"><div class="product_image">' +
-                        '<img src="/uploads/' + data[i].image + '" alt=""></div><div class="favorite favorite_left"></div><div class="product_info">' +
+                        '<img src="/uploads/' + data[i].image + '" alt=""></div><div class="favorite favorite_left"></div>' +
+                        '<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>' +
+                        '<div class="product_info">' +
                         '<h6 class="product_name"><a href="">' + data[i].name + '</a></h6>' +
-                        '<div class="product_price">N' + data[i].amount + '<span></span></div></div></div>' +
+                        '<div class="product_price">N' + data[i].amount + '<span>$590.00</span></div></div></div>' +
                         '<div class="red_button add_to_cart_button"><a href="#">Add To Cart</a></div></div>';
                     $('#products').append(product);
                 }
