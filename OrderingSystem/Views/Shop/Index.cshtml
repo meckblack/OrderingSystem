@@ -1,0 +1,71 @@
+﻿@model IEnumerable<OrderingSystem.Models.Dish>
+
+@{
+    Layout = "~/Views/Shared/_ShopLayout.cshtml ";
+}
+<style>
+    .pad {
+        padding-top: 90px;
+    }
+</style>
+<div class="new_arrivals pad">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <div class="section_title new_arrivals_title">
+                    <h2>Avaliable Food</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col text-center">
+                <div class="new_arrivals_sorting">
+                    <ul id="meal_ul" class="arrivals_grid_sorting clearfix button-group filters-button-group"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="product-grid" id="products" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Landing/js/jquery-3.2.1.min.js"></script>
+<script>
+    var FetchMeals = function() {
+        $.ajax({
+            type: "GET",
+            url: "/Shop/FetchMeals",
+            async: true,
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var val = '<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*" >' + data[i].name + '</li >';
+                    $('#meal_ul').append(val);
+                    FetchDishes(data[0].id)
+                }
+            }
+        });
+    };
+    FetchMeals();
+
+    var FetchDishes = function (id) {
+        $.ajax({
+            type: "GET",
+            url: "/Shop/FetchDishes",
+            data: { id: id },
+            async: true,
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var product = '<div class="product-item men"><div class="product discount product_filter"><div class="product_image">' +
+                        '<img src="/uploads/' + data[i].image + '" alt=""></div><div class="favorite favorite_left"></div><div class="product_info">' +
+                        '<h6 class="product_name"><a href="">' + data[i].name + '</a></h6>' +
+                        '<div class="product_price">N' + data[i].amount + '<span></span></div></div></div>' +
+                        '<div class="red_button add_to_cart_button"><a href="#">Add To Cart</a></div></div>';
+                    $('#products').append(product);
+                }
+            }
+        });
+    }
+</script>
