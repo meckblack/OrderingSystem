@@ -17,7 +17,8 @@ namespace OrderingSystem.Data
 
         public DbSet<Meal> Meals { get; set; }
         public DbSet<Dish> Dishes { get; set; }
-        
+        public DbSet<Role> Roles { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)
