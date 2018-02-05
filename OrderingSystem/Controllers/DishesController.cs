@@ -33,8 +33,8 @@ namespace OrderingSystem.Controllers
         // GET: Dishes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _db.Dishes.Include(d => d.Meal);
-            return View(await applicationDbContext.ToListAsync());
+            var dishes = _db.Dishes.Include(d => d.Meal);
+            return View(await dishes.ToListAsync());
         }
 
         #endregion

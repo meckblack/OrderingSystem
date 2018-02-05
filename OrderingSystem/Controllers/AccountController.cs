@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using OrderingSystem.Data;
 using OrderingSystem.Models;
 using OrderingSystem.Models.AccountViewModels;
 using OrderingSystem.Services;
@@ -24,21 +26,131 @@ namespace OrderingSystem.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly ApplicationDbContext _db;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _db = context;
         }
 
         [TempData]
         public string ErrorMessage { get; set; }
+
+
+
+        #region Custom Methods
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> RoleIndex()
+        {
+            return View(await _db.Roles.ToListAsync());
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CreateRole(Role role)
+        {
+            if (ModelState.IsValid)
+            {
+                if (role.Name == "Superuser")
+                {
+                    ModelState.AddModelError("Impossible", "The role 'Superuser' already exists!");
+                    TempData["Impossible"] = "The role 'Superuser' already exists!";
+                    return RedirectToAction(nameof(RoleIndex));
+                }
+                else
+                {
+                    _db.Roles.Add(role);
+                    await _db.SaveChangesAsync();
+                    TempData["success"] = "Role has been added!";
+                }
+                return RedirectToAction(nameof(RoleIndex));
+            }
+            return View(role);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> EditRole(long id)
+        {
+            var role = await _db.Roles.FindAsync(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+            if (role.Name == "Superuser")
+            {
+                TempData["Impossible"] = "The role 'Superuser' cannot be modified!";
+                return RedirectToAction(nameof(RoleIndex));
+            }
+            return View(role);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> EditRole(Role role)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Entry(role).State = EntityState.Modified;
+                await _db.SaveChangesAsync();
+                TempData["Success"] = "Role successfully modified! ";
+                return RedirectToAction(nameof(RoleIndex));
+            }
+            return View(role);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var role = await _db.Roles
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            return View(role);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var role = await _db.Roles.SingleOrDefaultAsync(m => m.Id == id);
+            _db.Roles.Remove(role);
+            await _db.SaveChangesAsync();
+            TempData["success"] = "A Role has been removed!";
+            return RedirectToAction(nameof(RoleIndex));
+        }
+
+
+
+        #endregion
 
         [HttpGet]
         [AllowAnonymous]
