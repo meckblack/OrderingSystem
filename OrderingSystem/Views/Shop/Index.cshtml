@@ -45,7 +45,7 @@
                 for (var i = 0; i < data.length; i++) {
                     var val = '<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*" >' + data[i].name + '</li >';
                     $('#meal_ul').append(val);
-                    FetchDishes(data[3].id)
+                    FetchDishes(data[0].id)
                 }
             }
         });
@@ -60,31 +60,12 @@
             async: true,
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {
-                    //var product =
-                    //    '<div class="product-item men">' +
-                    //        '<div class="product discount product_filter">' +
-                    //            '<div class="product_image">' +
-                    //                '<img src="/uploads/' + data[i].image + '" alt="">'
-                    //         '</div>' +
-                    //                '<div class="favorite favorite_left"></div>' +
-                    //                '<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>' +
-                    //                '<div class="product_info">' +
-                    //                    '<h6 class="product_name"><a href="">' + data[i].name + '</a></h6>' +
-                    //                    '<div class="product_price"> N' + data[i].amount + '<span>$590.00</span></div>' +
-                    //                '</div>' +
-                    //            '</div>' +
-                    //            '<a href="#" class = "red_button add_to_cart_button" >add to cart</a>' +
-                    //        '</div>'
-                    //         $('#products').append(product);
-
                     var product = '<div class="product-item men"><div class="product discount product_filter"><div class="product_image">' +
-                        '<img src="/uploads/' + data[i].image + '" alt=""></div><div class="favorite favorite_left"></div>' +
-                        '<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>' +
-                        '<div class="product_info">' +
+                        '<img src="/uploads/' + data[i].image + '" alt=""></div><div class="favorite favorite_left"></div><div class="product_info">' +
                         '<h6 class="product_name"><a href="">' + data[i].name + '</a></h6>' +
-                        '<div class="product_price">N' + data[i].amount + '<span>$590.00</span></div></div></div>' +
-                        '<div class="red_button add_to_cart_button"><a href="">Add To Cart</a></div></div>';
-                    $('#products_ul').append(product);
+                        '<div class="product_price">N' + data[i].amount + '<span></span></div></div></div>' +
+                        '<div class="red_button add_to_cart_button"><a href="#">Add To Cart</a></div></div>';
+                    $('#products').append(product);
                 }
             }
         });
