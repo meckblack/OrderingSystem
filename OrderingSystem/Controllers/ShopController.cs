@@ -3,39 +3,62 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OrderingSystem.Data;
 
 namespace OrderingSystem.Controllers
 {
     public class ShopController : Controller
     {
-        public ApplicationDbContext app;
+        private readonly ApplicationDbContext _db;
 
-        public ShopController(ApplicationDbContext _app)
+        #region Controller
+
+        public ShopController(ApplicationDbContext context)
         {
-            app = _app;
+            _db = context;
         }
+
+        #endregion
+        
 
         public IActionResult Index()
         {
             return View();
         }
 
-        [Route("shop/single")]
-        public IActionResult Single()
+        #region Shop Single
+
+        [Route("shop/single/{id}")]
+        public async Task<IActionResult> Single(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var single = await _db.Dishes
+                .SingleOrDefaultAsync(m => m.Id == id);
+
+            if (single == null)
+            {
+                return NotFound();
+            }
+
+            return View(single);
         }
+        
+        #endregion
+
 
         public JsonResult FetchMeals()
         {
-            var meal = app.Meals.OrderBy(s => s.Name).ToList();
+            var meal = _db.Meals.OrderBy(s => s.Name).ToList();
             return Json(meal);
         }
 
         public JsonResult FetchDishes(int id)
         {
-            var dishes = app.Dishes.Where(s => s.MealId == id).ToList();
+            var dishes = _db.Dishes.Where(s => s.MealId == id).ToList();
             return Json(dishes);
         }
     }
